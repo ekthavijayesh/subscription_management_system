@@ -1,7 +1,8 @@
-"use server";
+﻿"use server";
 
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import type { UserRole } from "@/types/database.types";
 import { loginSchema, signupSchema, forgotPasswordSchema } from "@/lib/validations/auth";
 import type { Database } from "@/types/database.types";
@@ -75,35 +76,42 @@ export async function signUp(formData: FormData): Promise<ActionResult> {
     };
   }
 
-  const supabase = createClient();
-  const { data, error } = await supabase.auth.signUp({
+    // Pre-confirm user using admin client to completely bypass Supabase shared SMTP rate limits
+  const adminClient = createAdminClient();
+  const { data: adminData, error: adminError } = await adminClient.auth.admin.createUser({
     email: parsed.data.email,
     password: parsed.data.password,
-    options: {
-      data: {
-        full_name: parsed.data.fullName,
-        company_name: parsed.data.companyName,
-      },
+    email_confirm: true,
+    user_metadata: {
+      full_name: parsed.data.fullName,
+      company_name: parsed.data.companyName,
     },
   });
 
-  if (error) {
+  if (adminError) {
     return {
       success: false,
-      error: error.message,
+      error: adminError.message,
     };
   }
 
-  if (data.session) {
+  // Sign in to establish active session cookies
+  const supabase = createClient();
+  const { error: signInError } = await supabase.auth.signInWithPassword({
+    email: parsed.data.email,
+    password: parsed.data.password,
+  });
+
+  if (signInError) {
     return {
       success: true,
-      redirectTo: "/customer",
+      redirectTo: "/login",
     };
   }
 
   return {
     success: true,
-    error: "Account created! Please check your email to verify your address.",
+    redirectTo: "/customer",
   };
 }
 
@@ -140,3 +148,5 @@ export async function forgotPassword(formData: FormData): Promise<ActionResult> 
     success: true,
   };
 }
+
+
