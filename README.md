@@ -128,3 +128,35 @@ All technical specifications, diagrams, runbooks, and security policies are main
 * [`docs/LAUNCH_READINESS.md`](./docs/LAUNCH_READINESS.md) — Production launch readiness & Go/No-Go sign-off.
 * [`docs/SETUP.md`](./docs/SETUP.md) — Development installation and Supabase setup guide.
 * [`docs/ACCESSIBILITY_PERFORMANCE_AUDIT.md`](./docs/ACCESSIBILITY_PERFORMANCE_AUDIT.md) — WCAG AA compliance and performance evidence.
+
+---
+
+## 9. Quick Start & Seed Accounts
+
+### Starting the Development Server
+
+```bash
+npm install
+npm run dev
+```
+
+Navigate to `http://localhost:3000`.
+
+### Pre-Seeded Demo Accounts
+
+The project includes pre-configured demo users across all three RBAC roles:
+
+| Role | Email | Password | Redirect Dashboard |
+| :--- | :--- | :--- | :--- |
+| **Admin** | `admin@demo.com` | `AdminPassword123!` | `/admin` |
+| **Staff** | `staff@demo.com` | `StaffPassword123!` | `/staff` |
+| **Customer** | `customer@demo.com` | `CustomerPassword123!` | `/customer` |
+
+To re-seed or verify demo users against your Supabase project:
+```bash
+node scripts/seed-users.mjs
+```
+
+> [!NOTE]
+> Ensure **Email provider** is enabled under **Authentication -> Providers -> Email** in your Supabase project dashboard so email/password sign-in is allowed.
+
