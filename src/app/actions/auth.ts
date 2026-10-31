@@ -3,6 +3,11 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { loginSchema, signupSchema, forgotPasswordSchema } from "@/lib/validations/auth";
+import type { Database } from "@/types/database.types";
+
+// Workaround: supabase-js v2 + postgrest-js type inference resolves .from() rows
+// to `never` when the Schema generic is not propagated correctly.
+type ProfileRow = Database["public"]["Tables"]["profiles"]["Row"];
 
 export interface ActionResult {
   success: boolean;
@@ -38,11 +43,12 @@ export async function signIn(formData: FormData): Promise<ActionResult> {
   }
 
   // Look up user role to determine redirection
-  const { data: profile } = await supabase
+  const { data: profileRaw } = await supabase
     .from("profiles")
     .select("role")
     .eq("id", data.user.id)
     .single();
+  const profile = profileRaw as Pick<ProfileRow, "role"> | null;
 
   const destination = profile?.role ? `/${profile.role}` : "/customer";
   return {
