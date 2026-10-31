@@ -31,11 +31,13 @@ export async function requireAuth(): Promise<CurrentUserSession> {
     redirect("/login");
   }
 
-  const { data: profile, error: profileError } = await supabase
+  const { data: profileData, error: profileError } = await supabase
     .from("profiles")
     .select("id, role, full_name, email, is_active")
     .eq("id", user.id)
     .single();
+
+  const profile = profileData as CurrentUserSession["profile"] | null;
 
   if (profileError || !profile || !profile.is_active) {
     redirect("/login?error=account_inactive");

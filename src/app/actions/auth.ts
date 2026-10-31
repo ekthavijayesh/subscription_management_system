@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import type { UserRole } from "@/types/database.types";
 import { loginSchema, signupSchema, forgotPasswordSchema } from "@/lib/validations/auth";
 
 export interface ActionResult {
@@ -38,12 +39,13 @@ export async function signIn(formData: FormData): Promise<ActionResult> {
   }
 
   // Look up user role to determine redirection
-  const { data: profile } = await supabase
+  const { data: profileData } = await supabase
     .from("profiles")
     .select("role")
     .eq("id", data.user.id)
     .single();
 
+  const profile = profileData as { role: UserRole } | null;
   const destination = profile?.role ? `/${profile.role}` : "/customer";
   return {
     success: true,

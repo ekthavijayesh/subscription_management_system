@@ -80,15 +80,8 @@ export interface Database {
           is_active?: boolean;
           created_at?: string;
           updated_at?: string;
-        };        Relationships: [
-          {
-            foreignKeyName: "profiles_id_fkey";
-            columns: ["id"];
-            isOneToOne: true;
-            referencedRelation: "users";
-            referencedColumns: ["id"];
-          }
-        ];
+        };
+        Relationships: [];
       };
       customer_staff_assignments: {
         Row: {
@@ -120,15 +113,8 @@ export interface Database {
           is_active?: boolean;
           created_at?: string;
           updated_at?: string;
-        };        Relationships: [
-          {
-            foreignKeyName: "profiles_id_fkey";
-            columns: ["id"];
-            isOneToOne: true;
-            referencedRelation: "users";
-            referencedColumns: ["id"];
-          }
-        ];
+        };
+        Relationships: [];
       };
       products: {
         Row: {
@@ -157,15 +143,8 @@ export interface Database {
           is_active?: boolean;
           created_at?: string;
           updated_at?: string;
-        };        Relationships: [
-          {
-            foreignKeyName: "profiles_id_fkey";
-            columns: ["id"];
-            isOneToOne: true;
-            referencedRelation: "users";
-            referencedColumns: ["id"];
-          }
-        ];
+        };
+        Relationships: [];
       };
       product_variants: {
         Row: {
@@ -197,15 +176,8 @@ export interface Database {
           is_active?: boolean;
           created_at?: string;
           updated_at?: string;
-        };        Relationships: [
-          {
-            foreignKeyName: "profiles_id_fkey";
-            columns: ["id"];
-            isOneToOne: true;
-            referencedRelation: "users";
-            referencedColumns: ["id"];
-          }
-        ];
+        };
+        Relationships: [];
       };
       plans: {
         Row: {
@@ -246,15 +218,8 @@ export interface Database {
           is_active?: boolean;
           created_at?: string;
           updated_at?: string;
-        };        Relationships: [
-          {
-            foreignKeyName: "profiles_id_fkey";
-            columns: ["id"];
-            isOneToOne: true;
-            referencedRelation: "users";
-            referencedColumns: ["id"];
-          }
-        ];
+        };
+        Relationships: [];
       };
       discounts: {
         Row: {
@@ -298,15 +263,8 @@ export interface Database {
           is_active?: boolean;
           created_at?: string;
           updated_at?: string;
-        };        Relationships: [
-          {
-            foreignKeyName: "profiles_id_fkey";
-            columns: ["id"];
-            isOneToOne: true;
-            referencedRelation: "users";
-            referencedColumns: ["id"];
-          }
-        ];
+        };
+        Relationships: [];
       };
       tax_rules: {
         Row: {
@@ -347,15 +305,8 @@ export interface Database {
           is_active?: boolean;
           created_at?: string;
           updated_at?: string;
-        };        Relationships: [
-          {
-            foreignKeyName: "profiles_id_fkey";
-            columns: ["id"];
-            isOneToOne: true;
-            referencedRelation: "users";
-            referencedColumns: ["id"];
-          }
-        ];
+        };
+        Relationships: [];
       };
       quotations: {
         Row: {
@@ -411,15 +362,8 @@ export interface Database {
           notes?: string | null;
           created_at?: string;
           updated_at?: string;
-        };        Relationships: [
-          {
-            foreignKeyName: "profiles_id_fkey";
-            columns: ["id"];
-            isOneToOne: true;
-            referencedRelation: "users";
-            referencedColumns: ["id"];
-          }
-        ];
+        };
+        Relationships: [];
       };
       quotation_items: {
         Row: {
@@ -469,15 +413,8 @@ export interface Database {
           tax_amount?: number;
           line_total?: number;
           created_at?: string;
-        };        Relationships: [
-          {
-            foreignKeyName: "profiles_id_fkey";
-            columns: ["id"];
-            isOneToOne: true;
-            referencedRelation: "users";
-            referencedColumns: ["id"];
-          }
-        ];
+        };
+        Relationships: [];
       };
       subscriptions: {
         Row: {
@@ -545,15 +482,8 @@ export interface Database {
           cancellation_reason?: string | null;
           created_at?: string;
           updated_at?: string;
-        };        Relationships: [
-          {
-            foreignKeyName: "profiles_id_fkey";
-            columns: ["id"];
-            isOneToOne: true;
-            referencedRelation: "users";
-            referencedColumns: ["id"];
-          }
-        ];
+        };
+        Relationships: [];
       };
       subscription_items: {
         Row: {
@@ -606,15 +536,8 @@ export interface Database {
           line_total?: number;
           created_at?: string;
           updated_at?: string;
-        };        Relationships: [
-          {
-            foreignKeyName: "profiles_id_fkey";
-            columns: ["id"];
-            isOneToOne: true;
-            referencedRelation: "users";
-            referencedColumns: ["id"];
-          }
-        ];
+        };
+        Relationships: [];
       };
       invoices: {
         Row: {
@@ -682,15 +605,8 @@ export interface Database {
           pdf_url?: string | null;
           created_at?: string;
           updated_at?: string;
-        };        Relationships: [
-          {
-            foreignKeyName: "profiles_id_fkey";
-            columns: ["id"];
-            isOneToOne: true;
-            referencedRelation: "users";
-            referencedColumns: ["id"];
-          }
-        ];
+        };
+        Relationships: [];
       };
       invoice_items: {
         Row: {
@@ -734,15 +650,8 @@ export interface Database {
           tax_amount?: number;
           line_total?: number;
           created_at?: string;
-        };        Relationships: [
-          {
-            foreignKeyName: "profiles_id_fkey";
-            columns: ["id"];
-            isOneToOne: true;
-            referencedRelation: "users";
-            referencedColumns: ["id"];
-          }
-        ];
+        };
+        Relationships: [];
       };
       payments: {
         Row: {
@@ -792,15 +701,8 @@ export interface Database {
           verified_at?: string | null;
           notes?: string | null;
           created_at?: string;
-        };        Relationships: [
-          {
-            foreignKeyName: "profiles_id_fkey";
-            columns: ["id"];
-            isOneToOne: true;
-            referencedRelation: "users";
-            referencedColumns: ["id"];
-          }
-        ];
+        };
+        Relationships: [];
       };
       cancellation_requests: {
         Row: {
@@ -841,15 +743,8 @@ export interface Database {
           decided_at?: string | null;
           created_at?: string;
           updated_at?: string;
-        };        Relationships: [
-          {
-            foreignKeyName: "profiles_id_fkey";
-            columns: ["id"];
-            isOneToOne: true;
-            referencedRelation: "users";
-            referencedColumns: ["id"];
-          }
-        ];
+        };
+        Relationships: [];
       };
       subscription_events: {
         Row: {
@@ -875,15 +770,8 @@ export interface Database {
           actor_id?: string | null;
           occurred_at?: string;
           metadata?: Json;
-        };        Relationships: [
-          {
-            foreignKeyName: "profiles_id_fkey";
-            columns: ["id"];
-            isOneToOne: true;
-            referencedRelation: "users";
-            referencedColumns: ["id"];
-          }
-        ];
+        };
+        Relationships: [];
       };
       activity_logs: {
         Row: {
@@ -915,15 +803,8 @@ export interface Database {
           changes?: Json;
           ip_address?: string | null;
           created_at?: string;
-        };        Relationships: [
-          {
-            foreignKeyName: "profiles_id_fkey";
-            columns: ["id"];
-            isOneToOne: true;
-            referencedRelation: "users";
-            referencedColumns: ["id"];
-          }
-        ];
+        };
+        Relationships: [];
       };
       notifications: {
         Row: {
@@ -961,15 +842,8 @@ export interface Database {
           sent_at?: string | null;
           read_at?: string | null;
           created_at?: string;
-        };        Relationships: [
-          {
-            foreignKeyName: "profiles_id_fkey";
-            columns: ["id"];
-            isOneToOne: true;
-            referencedRelation: "users";
-            referencedColumns: ["id"];
-          }
-        ];
+        };
+        Relationships: [];
       };
     };
     Views: {
