@@ -1,6 +1,9 @@
+
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import type { UserRole } from "@/types/database.types";
+import type { Database, UserRole } from "@/types/database.types";
+
+type ProfileRow = Database["public"]["Tables"]["profiles"]["Row"];
 
 export interface CurrentUserSession {
   user: {
@@ -22,6 +25,7 @@ export interface CurrentUserSession {
  */
 export async function requireAuth(): Promise<CurrentUserSession> {
   const supabase = createClient();
+
   const {
     data: { user },
     error: userError,
@@ -31,13 +35,16 @@ export async function requireAuth(): Promise<CurrentUserSession> {
     redirect("/login");
   }
 
-  const { data: profileData, error: profileError } = await supabase
+  const { data: profileRaw, error: profileError } = await supabase
     .from("profiles")
     .select("id, role, full_name, email, is_active")
     .eq("id", user.id)
     .single();
 
-  const profile = profileData as CurrentUserSession["profile"] | null;
+  const profile = profileRaw as Pick<
+    ProfileRow,
+    "id" | "role" | "full_name" | "email" | "is_active"
+  > | null;
 
   if (profileError || !profile || !profile.is_active) {
     redirect("/login?error=account_inactive");
@@ -62,11 +69,12 @@ export async function requireAuth(): Promise<CurrentUserSession> {
  * Ensures the authenticated user has one of the allowed roles.
  * Redirects to their appropriate role home if unauthorized.
  */
-export async function requireRole(allowedRoles: UserRole[]): Promise<CurrentUserSession> {
+export async function requireRole(
+  allowedRoles: UserRole[]
+): Promise<CurrentUserSession> {
   const session = await requireAuth();
 
   if (!allowedRoles.includes(session.profile.role)) {
-    // Redirect to their own dashboard
     redirect(`/${session.profile.role}`);
   }
 
