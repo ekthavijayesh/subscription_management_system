@@ -270,7 +270,7 @@ export async function listInvoices(
 
   if (filter.customerId) query = query.eq("customer_id", filter.customerId);
   if (filter.subscriptionId) query = query.eq("subscription_id", filter.subscriptionId);
-  if (filter.status) query = query.eq("status", filter.status);
+  if (filter.status) query = query.eq("status", filter.status as any);
 
   const { data, error, count } = await query;
 

@@ -371,7 +371,7 @@ export async function listQuotations(filter: ListQuotationsFilter = {}): Promise
     query = query.eq("customer_id", filter.customerId);
   }
   if (filter.status) {
-    query = query.eq("status", filter.status);
+    query = query.eq("status", filter.status as any);
   }
 
   const { data, error, count } = await query;

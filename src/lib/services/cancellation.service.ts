@@ -241,7 +241,7 @@ export async function listCancellationRequests(params?: {
 
   if (params?.subscriptionId) query = query.eq("subscription_id", params.subscriptionId);
   if (params?.customerId) query = query.eq("customer_id", params.customerId);
-  if (params?.status) query = query.eq("status", params.status);
+  if (params?.status) query = query.eq("status", params.status as any);
 
   const { data, error } = await query;
   if (error) {

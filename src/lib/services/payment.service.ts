@@ -232,7 +232,7 @@ export async function listPayments(
 
   if (filter.customerId) query = query.eq("customer_id", filter.customerId);
   if (filter.invoiceId) query = query.eq("invoice_id", filter.invoiceId);
-  if (filter.status) query = query.eq("status", filter.status);
+  if (filter.status) query = query.eq("status", filter.status as any);
 
   const { data, error, count } = await query;
   if (error) {

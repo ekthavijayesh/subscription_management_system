@@ -51,7 +51,7 @@ export async function signIn(formData: FormData): Promise<ActionResult> {
     .single();
   const profile = profileRaw as Pick<ProfileRow, "role"> | null;
 
-  const profile = profileData as { role: UserRole } | null;
+
   const destination = profile?.role ? `/${profile.role}` : "/customer";
   return {
     success: true,

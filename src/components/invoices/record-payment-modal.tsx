@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select } from "@/components/ui/select";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { recordPaymentAction } from "@/app/actions/payments";
 
@@ -89,17 +89,18 @@ export function RecordPaymentModal({ invoiceId, currency, amountDue }: Props) {
               <Label htmlFor="payment_method" className="text-xs">
                 Method
               </Label>
-              <Select
+              <select
+                className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                 id="payment_method"
                 value={method}
-                onChange={(e) => setMethod(e.target.value as any)}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setMethod(e.target.value as any)}
               >
                 <option value="bank_transfer">Bank Transfer</option>
                 <option value="credit_card">Credit Card (Manual/POS)</option>
                 <option value="cash">Cash</option>
                 <option value="manual">Manual Check / Wire</option>
                 <option value="other">Other</option>
-              </Select>
+              </select>
             </div>
           </div>
 
