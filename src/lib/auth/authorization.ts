@@ -1,6 +1,11 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import type { UserRole } from "@/types/database.types";
+import type { Database, UserRole } from "@/types/database.types";
+
+// Workaround: supabase-js v2 + postgrest-js type inference resolves .from() rows
+// to `never` when the Schema generic is not propagated correctly. We cast
+// explicitly so that the rest of the file remains strictly typed.
+type ProfileRow = Database["public"]["Tables"]["profiles"]["Row"];
 
 export interface CurrentUserSession {
   user: {
@@ -31,11 +36,15 @@ export async function requireAuth(): Promise<CurrentUserSession> {
     redirect("/login");
   }
 
-  const { data: profile, error: profileError } = await supabase
+  const { data: profileRaw, error: profileError } = await supabase
     .from("profiles")
     .select("id, role, full_name, email, is_active")
     .eq("id", user.id)
     .single();
+  const profile = profileRaw as Pick<
+    ProfileRow,
+    "id" | "role" | "full_name" | "email" | "is_active"
+  > | null;
 
   if (profileError || !profile || !profile.is_active) {
     redirect("/login?error=account_inactive");
