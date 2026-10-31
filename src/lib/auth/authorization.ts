@@ -1,10 +1,8 @@
+
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import type { Database, UserRole } from "@/types/database.types";
 
-// Workaround: supabase-js v2 + postgrest-js type inference resolves .from() rows
-// to `never` when the Schema generic is not propagated correctly. We cast
-// explicitly so that the rest of the file remains strictly typed.
 type ProfileRow = Database["public"]["Tables"]["profiles"]["Row"];
 
 export interface CurrentUserSession {
@@ -27,6 +25,7 @@ export interface CurrentUserSession {
  */
 export async function requireAuth(): Promise<CurrentUserSession> {
   const supabase = createClient();
+
   const {
     data: { user },
     error: userError,
@@ -41,6 +40,7 @@ export async function requireAuth(): Promise<CurrentUserSession> {
     .select("id, role, full_name, email, is_active")
     .eq("id", user.id)
     .single();
+
   const profile = profileRaw as Pick<
     ProfileRow,
     "id" | "role" | "full_name" | "email" | "is_active"
@@ -69,11 +69,12 @@ export async function requireAuth(): Promise<CurrentUserSession> {
  * Ensures the authenticated user has one of the allowed roles.
  * Redirects to their appropriate role home if unauthorized.
  */
-export async function requireRole(allowedRoles: UserRole[]): Promise<CurrentUserSession> {
+export async function requireRole(
+  allowedRoles: UserRole[]
+): Promise<CurrentUserSession> {
   const session = await requireAuth();
 
   if (!allowedRoles.includes(session.profile.role)) {
-    // Redirect to their own dashboard
     redirect(`/${session.profile.role}`);
   }
 
